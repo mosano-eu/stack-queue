@@ -1,5 +1,6 @@
-stack-queue
-===========
+# stack-queue
+
+[![Test Status](http://strider.findhit.com/findhit/stack-queue/badge)](http://strider.findhit.com/findhit/stack-queue) [![Dependency Status](https://david-dm.org/findhit/stack-queue.svg)](https://david-dm.org/findhit/stack-queue)
 
 Execution stacks compatible with promises
 
