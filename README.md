@@ -11,7 +11,7 @@ npm install --save stack-queue
 
 ## Usage
 
-Have you ever used [express](/strongloop/express) or [connect](/strongloop/connect)?
+Have you ever used [express](https://github.com/strongloop/express) or [connect](https://github.com/strongloop/connect)?
 
 If so, you should know how they share they stack with `function ( req, res, next )`.
 
@@ -20,9 +20,9 @@ and compatible with promises!
 
 Lets see some examples:
 
-### Connect Example
+### [connect](https://github.com/strongloop/connect) Example
 
-This is how you would implement a [connect](/strongloop/connect)-like example:
+This is how you would implement a [connect](https://github.com/strongloop/connect)-like example:
 
 ```js
 
