@@ -108,6 +108,46 @@ describe( "Stack", function () {
             });
     })
 
+    it( "should NOT PASS execution of stack if a string is provided", function () {
+
+        var functions = [
+            sinon.stub().callsArg( 0 ),
+            sinon.stub().returns( 'hehehe' ),
+            sinon.stub().callsArg( 0 ),
+        ];
+
+        stack.queue( functions );
+
+        return stack.dispatch()
+            .then(function ( value ) {
+                expect( value ).to.equal( 'hehehe' );
+
+                expect( functions[0].callCount ).to.be.equal( 1 );
+                expect( functions[1].callCount ).to.be.equal( 1 );
+                expect( functions[2].callCount ).to.be.equal( 0 );
+            });
+    });
+
+    it( "should NOT PASS execution of stack if an object is provided", function () {
+
+        var functions = [
+        sinon.stub().callsArg( 0 ),
+        sinon.stub().returns( {} ),
+        sinon.stub().callsArg( 0 ),
+        ];
+
+        stack.queue( functions );
+
+        return stack.dispatch()
+            .then(function ( value ) {
+                expect( value ).to.deep.equal( {} );
+
+                expect( functions[0].callCount ).to.be.equal( 1 );
+                expect( functions[1].callCount ).to.be.equal( 1 );
+                expect( functions[2].callCount ).to.be.equal( 0 );
+            });
+    });
+
     // Examples:
 
     describe( "small http simulation", function () {
