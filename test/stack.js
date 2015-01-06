@@ -66,17 +66,31 @@ describe( "Stack", function () {
             });
     });
 
-    it( "should capture errors to promise, from internal throw", function () {
+    it( "should capture errors to promise, from internal throw (using sinon)", function () {
 
         stack.queue( sinon.stub().throws( new Error( "test" ) ) );
 
         return stack.dispatch()
             .then(function () {
-                throw new Error( "stack should not fulfill this promise" );
+                throw new Error( "shouldn't fulfill .dispatch 's returned promise" );
             }, function ( err ) {
                 expect( err.message ).to.equal( "test" );
             });
 
+    });
+
+    it( "should capture errors to promise, from internal throw", function () {
+
+        stack.queue(function () {
+            throw new Error( "test" );
+        });
+
+        return stack.dispatch()
+            .then(function () {
+                throw new Error( "shouldn't fulfill .dispatch 's returned promise" );
+            }, function ( err ) {
+                expect( err.message ).to.be.equal( "test" );
+            });
     });
 
     it( "should transport arguments given to dispatch", function () {
@@ -131,9 +145,9 @@ describe( "Stack", function () {
     it( "should NOT PASS execution of stack if an object is provided", function () {
 
         var functions = [
-        sinon.stub().callsArg( 0 ),
-        sinon.stub().returns( {} ),
-        sinon.stub().callsArg( 0 ),
+            sinon.stub().callsArg( 0 ),
+            sinon.stub().returns( {} ),
+            sinon.stub().callsArg( 0 ),
         ];
 
         stack.queue( functions );
