@@ -1,5 +1,7 @@
 # stack-queue
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/findhit/stack-queue?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Test Status](http://strider.findhit.com/findhit/stack-queue/badge)](http://strider.findhit.com/findhit/stack-queue) [![Dependency Status](https://david-dm.org/findhit/stack-queue.svg)](https://david-dm.org/findhit/stack-queue)
 
 Execution stacks compatible with promises
