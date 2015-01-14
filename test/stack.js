@@ -1,4 +1,5 @@
 var Stack = require( '../index' ),
+    Util = require( 'findhit-util' ),
 
     sinon = require( 'sinon' ),
     chai = require( 'chai' ),
@@ -110,7 +111,7 @@ describe( "Stack", function () {
         return stack.dispatch( args[0], args[1] );
     });
 
-    it( "should continue stack with some positive return instead of `next`", function () {
+    it( "should return stack with some positive return instead of `next`", function () {
 
         stack.queue(function ( next ) {
             return 'yolo';
@@ -120,9 +121,9 @@ describe( "Stack", function () {
             .then(function ( value ) {
                 expect( value ).to.equal( 'yolo' );
             });
-    })
+    });
 
-    it( "should NOT PASS execution of stack if a string is provided", function () {
+    it( "should BREAK execution of stack if a string is provided", function () {
 
         var functions = [
             sinon.stub().callsArg( 0 ),
@@ -142,7 +143,11 @@ describe( "Stack", function () {
             });
     });
 
-    it( "should NOT PASS execution of stack if an object is provided", function () {
+    it( "should BREAK execution of stack if an object is provided", function () {
+
+        stack.options.breakOn = function ( value ) {
+            return Util.is.object( value );
+        };
 
         var functions = [
             sinon.stub().callsArg( 0 ),
@@ -159,6 +164,30 @@ describe( "Stack", function () {
                 expect( functions[0].callCount ).to.be.equal( 1 );
                 expect( functions[1].callCount ).to.be.equal( 1 );
                 expect( functions[2].callCount ).to.be.equal( 0 );
+            });
+    });
+
+    it( "should NOT BREAK execution of stack if an object is provided, and breakOn doesn't allow it", function () {
+
+        stack.options.breakOn = function ( value ) {
+            return false;
+        };
+
+        var functions = [
+            sinon.stub().callsArg( 0 ),
+            sinon.stub().returns( {} ),
+            sinon.stub().callsArg( 0 ),
+        ];
+
+        stack.queue( functions );
+
+        return stack.dispatch()
+            .then(function ( value ) {
+                expect( value ).to.equal( undefined );
+
+                expect( functions[0].callCount ).to.be.equal( 1 );
+                expect( functions[1].callCount ).to.be.equal( 1 );
+                expect( functions[2].callCount ).to.be.equal( 1 );
             });
     });
 
