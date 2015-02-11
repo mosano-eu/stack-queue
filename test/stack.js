@@ -191,6 +191,24 @@ describe( "Stack", function () {
             });
     });
 
+    it( "should threat functions with the same params length as dispatched as sync methods", function () {
+
+        var functions = [
+            function ( a, b ) {},
+            function ( a, b ) {},
+            function ( a, b ) {
+                return b;
+            },
+        ];
+
+        stack.queue( functions );
+
+        return stack.dispatch( 'a', 'b' )
+            .then(function ( value ) {
+                expect( value ).to.equal( 'b' );
+            });
+    });
+
     // Examples:
 
     describe( "small http simulation", function () {

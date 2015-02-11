@@ -1,4 +1,7 @@
 ## upcoming
+- Add support for auto-nexting sync functions (detection is made by checking if
+  the length of function parameters is the same as the length of arguments
+  supplied on `.dispatch` arguments)
 
 ## 0.0.5
 - Support for providing options on construction: `new Stack( options )`
