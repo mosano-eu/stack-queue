@@ -1,4 +1,6 @@
 ## upcoming
+
+## 0.0.6
 - Add support for auto-nexting sync functions (detection is made by checking if
   the length of function parameters is the same as the length of arguments
   supplied on `.dispatch` arguments)
